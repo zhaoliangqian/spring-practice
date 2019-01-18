@@ -1,0 +1,33 @@
+group 'com.zlqian'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'org.springframework:spring-core:4.2.9.RELEASE'
+    compile 'org.springframework:spring-context:4.2.9.RELEASE'
+}
+
+// 指定上传的路径
+def localMavenRepo = 'file://' + new File('D:/maven/.m2/repository').absolutePath
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: localMavenRepo)
+            pom.project {
+                name = project.name
+                packaging = 'jar'
+                description = 'description'
+            }
+        }
+    }
+}
